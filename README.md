@@ -1,21 +1,25 @@
- rmpbuild
- 
- uncomment 1-1) install rpm, 1-2) make a passphrase for gpg in build.sh for the first running.
- And run build.sh
+This is for rmp build exampe script.
+=====================================
 
-It contains like below.
+1. build
+	Uncomment 1-1) install rpm, 1-2) make a passphrase for gpg in build.sh for the first running.
 
- 1) requirements
- 1-1) install rpm
- 1-2) make a passphrase for gpg
- 1-3) make .rpmmacros file
+	./build.sh
 
- 2) make rpm
- 2-1) make source
- 2-2) deploy a source and a spec file
- 2-3) build rpm
+2. contains
+	There are some examples.
+	
+	1) requirements
+	- install rpm
+	- make a passphrase for gpg
+	- make .rpmmacros file
 
- 3) install and test
+	2) make rpm
+	- make source
+	- deploy a source and a spec file
+	- build rpm
+
+3. install and test
 
 
 
