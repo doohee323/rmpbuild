@@ -1,3 +1,9 @@
+#!/bin/bash
+
+cd
+BASEDIR=`pwd`
+echo '$BASEDIR:'$BASEDIR
+
 # 1) requirements
 # 1-1) install rpm
 # sudo apt-get install rpm -y
@@ -30,32 +36,31 @@ cd
 # gpg --delete-secret-key 1024D/C646A999
 # gpg --delete-key C646A999
 
-#doohee@doohee-desktop:~/rpmdir/SPECS$ gpg --list-keys
+#doohee@doohee-desktop:$BASEDIR/rpmbuild/SPECS$ gpg --list-keys
 #pub   2048R/D330A940 2015-12-09 [expires: 2025-12-06]
 #uid                  dewey <doohee323@gmail.com>
 #sub   2048R/7E9B1216 2015-12-09 [expires: 2025-12-06]
 
 # 1-3) make .rpmmacros file
 # F1035488: comes from passphrase
-rm -Rf ~/.rpmmacros
-echo $'%_topdir /home/doohee/rpmdir \n'\
-$'%_builddir %{_topdir}/BUILD \n'\
-$'%_rpmdir %{_topdir}/RPMS \n'\
-$'%_sourcedir %{_topdir}/SOURCES \n'\
-$'%_specdir %{_topdir}/SPECS \n'\
-$'%_srcrpmdir %{_topdir}/SRPMS \n'\
-$'%_tmppath %{_topdir}/TMP \n'\
-$'%_gpg_name "D330A940"'> .rpmmacros
+#echo $'%_topdir /home/doohee/rpmbuild \n'\
+#$'%_builddir %{_topdir}/BUILD \n'\
+#$'%_rpmbuild %{_topdir}/RPMS \n'\
+#$'%_sourcedir %{_topdir}/SOURCES \n'\
+#$'%_specdir %{_topdir}/SPECS \n'\
+#$'%_srcrpmbuild %{_topdir}/SRPMS \n'\
+#$'%_tmppath %{_topdir}/tmp \n'\
+#$'%_gpg_name "D330A940"'> .rpmmacros
 
-mkdir -p ~/rpmdir/BUILD
-mkdir -p ~/rpmdir/RPMS
-mkdir -p ~/rpmdir/SOURCES
-mkdir -p ~/rpmdir/SPECS
-mkdir -p ~/rpmdir/SRPMS
+#mkdir -p $BASEDIR/rpmbuild/BUILD
+#mkdir -p $BASEDIR/rpmbuild/RPMS
+#mkdir -p $BASEDIR/rpmbuild/SOURCES
+#mkdir -p $BASEDIR/rpmbuild/SPECS
+#mkdir -p $BASEDIR/rpmbuild/SRPMS
 
 # 2) make rpm
 # 2-1) make source
-cd ~/workspace/etc/rpmbuild
+cd $BASEDIR/rpmbuild/SOURCES
 mkdir -p test-1.0.0
 cat <<EOF > test-1.0.0/test
 #!/bin/bash
@@ -66,20 +71,18 @@ sh test-1.0.0/test
 tar czvf test-1.0.0.tar.gz test-1.0.0/
 
 # 2-2) deploy a source and a spec file
-cp ~/workspace/etc/rpmbuild/test-1.0.0.tar.gz ~/rpmdir/SOURCES/
-cp ~/workspace/etc/rpmbuild/test.spec ~/rpmdir/SPECS/
 
 # 2-3) build rpm
-cd ~/rpmdir/SPECS/
+cd $BASEDIR/rpmbuild/SPECS/
 rpmbuild --sign -ba test.spec
 # Pswd!123
 
-ll ~/rpmdir/RPMS/x86_64
+ll $BASEDIR/rpmbuild/RPMS/x86_64
 
-#* sudo alien -i ~/rpmdir/RPMS/x86_64/*.rpm
+#* sudo alien -i $BASEDIR/rpmbuild/RPMS/x86_64/*.rpm
   
 # 3) install and test
-sudo rpm -ivh  ~/rpmdir/RPMS/x86_64/test-1.0.0-1.x86_64.rpm --nodeps
+sudo rpm -ivh  $BASEDIR/rpmbuild/RPMS/x86_64/test-1.0.0-1.x86_64.rpm --nodeps
 
 rpm -qa test
 rpm -qf /usr/local/bin/test

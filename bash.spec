@@ -26,22 +26,25 @@ popular and powerful, and you'll probably end up using it.
 %prep
 %setup -q
  
-%build
- 
+#%build
+
 #configure
 #make %{?_smp_mflags}
- 
+
 %install
 rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT
 cp -Rf %{_tmppath}/bash-%{version}/* $RPM_BUILD_ROOT
  
-%clean
+#%clean
 rm -rf $RPM_BUILD_ROOT
 rm -rf %{_tmppath}/bash-%{version}
  
 %files
 %defattr(-,root,root,-)
+/bin
+/share
+
 #%doc
 
 %attr(0755,root,root)/bin/bash
