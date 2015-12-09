@@ -24,6 +24,16 @@ cd
 #%echo done
 # EOF
 # gpg --list-keys
+# gpg --delete-secret-key one
+# gpg --list-keys one
+# gpg --list-secret-keys
+# gpg --delete-secret-key 1024D/C646A999
+# gpg --delete-key C646A999
+
+#doohee@doohee-desktop:~/rpmdir/SPECS$ gpg --list-keys
+#pub   2048R/D330A940 2015-12-09 [expires: 2025-12-06]
+#uid                  dewey <doohee323@gmail.com>
+#sub   2048R/7E9B1216 2015-12-09 [expires: 2025-12-06]
 
 # 1-3) make .rpmmacros file
 # F1035488: comes from passphrase
@@ -34,7 +44,8 @@ $'%_rpmdir %{_topdir}/RPMS \n'\
 $'%_sourcedir %{_topdir}/SOURCES \n'\
 $'%_specdir %{_topdir}/SPECS \n'\
 $'%_srcrpmdir %{_topdir}/SRPMS \n'\
-$'%_gpg_name "F1035488"'> .rpmmacros
+$'%_tmppath %{_topdir}/TMP \n'\
+$'%_gpg_name "D330A940"'> .rpmmacros
 
 mkdir -p ~/rpmdir/BUILD
 mkdir -p ~/rpmdir/RPMS
@@ -44,7 +55,7 @@ mkdir -p ~/rpmdir/SRPMS
 
 # 2) make rpm
 # 2-1) make source
-cd ~/workspace/java/rpmbuild
+cd ~/workspace/etc/rpmbuild
 mkdir -p test-1.0.0
 cat <<EOF > test-1.0.0/test
 #!/bin/bash
@@ -55,8 +66,8 @@ sh test-1.0.0/test
 tar czvf test-1.0.0.tar.gz test-1.0.0/
 
 # 2-2) deploy a source and a spec file
-cp ~/workspace/java/rpmbuild/test-1.0.0.tar.gz ~/rpmdir/SOURCES/
-cp ~/workspace/java/rpmbuild/test.spec ~/rpmdir/SPECS/
+cp ~/workspace/etc/rpmbuild/test-1.0.0.tar.gz ~/rpmdir/SOURCES/
+cp ~/workspace/etc/rpmbuild/test.spec ~/rpmdir/SPECS/
 
 # 2-3) build rpm
 cd ~/rpmdir/SPECS/

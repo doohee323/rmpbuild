@@ -28,22 +28,23 @@ popular and powerful, and you'll probably end up using it.
  
 %build
  
-configure
+#configure
 #make %{?_smp_mflags}
  
 %install
 rm -rf $RPM_BUILD_ROOT
-#make install DESTDIR=$RPM_BUILD_ROOT
-mkdir -p $RPM_BUILD_ROOT/usr/local/bin
-cp bash $RPM_BUILD_ROOT/usr/local/bin
+mkdir -p $RPM_BUILD_ROOT
+cp -Rf %{_tmppath}/bash-%{version}/* $RPM_BUILD_ROOT
  
 %clean
 rm -rf $RPM_BUILD_ROOT
+rm -rf %{_tmppath}/bash-%{version}
  
 %files
 %defattr(-,root,root,-)
 #%doc
- 
+
 %attr(0755,root,root)/bin/bash
+%attr(0755,root,root)/bin/bashbug
  
 %changelog

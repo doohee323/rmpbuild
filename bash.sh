@@ -23,11 +23,9 @@ Passphrase: vhxlspt!qotnl
 %commit
 %echo done
 EOF
-# gpg --list-keys
-# gpg --list-secret-keys
 
-# 1-3) make .rpmmacros file
-# F1035488: comes from passphrase
+ 1-3) make .rpmmacros file
+ F1035488: comes from passphrase
 rm -Rf ~/.rpmmacros
 echo $'%_topdir /home/doohee/rpmdir \n'\
 $'%_builddir %{_topdir}/BUILD \n'\
@@ -35,33 +33,43 @@ $'%_rpmdir %{_topdir}/RPMS \n'\
 $'%_sourcedir %{_topdir}/SOURCES \n'\
 $'%_specdir %{_topdir}/SPECS \n'\
 $'%_srcrpmdir %{_topdir}/SRPMS \n'\
-$'%_gpg_name "F1035488"'> .rpmmacros
+$'%_tmppath %{_topdir}/TMP \n'\
+$'%_gpg_name "D330A940"'> .rpmmacros
 
 mkdir -p ~/rpmdir/BUILD
 mkdir -p ~/rpmdir/RPMS
 mkdir -p ~/rpmdir/SOURCES
 mkdir -p ~/rpmdir/SPECS
 mkdir -p ~/rpmdir/SRPMS
+mkdir -p ~/rpmdir/TMP
+
+tar xvfz ~/rpmdir/SOURCES/bash-4.3.30.tar.gz -C ~/rpmdir/BUILD
+rm -Rf ~/rpmdir/TMP/bash-4.3.30
+mkdir -p ~/rpmdir/TMP/bash-4.3.30
+cd ~/rpmdir/BUILD/bash-4.3.30
+./configure --prefix=/home/doohee/rpmdir/TMP/bash-4.3.30
+make install
 
 # 2) make rpm
 # 2-1) deploy a source and a spec file
-cp ~/workspace/java/rpmbuild/bash.spec ~/rpmdir/SPECS/
+cp ~/workspace/etc/rpmbuild/bash.spec ~/rpmdir/SPECS/
 
 # 2-3) build rpm
 cd ~/rpmdir/SPECS/
 rpmbuild bash.spec
-rpmbuild --sign -ba bash.spec
-# Pswd!123
 
-ll ~/rpmdir/RPMS/x86_64
+rpmbuild --sign -ba bash.spec
+# vhxlspt!qotnl
+
+ls -al ~/rpmdir/RPMS/x86_64
 
 #* sudo alien -i ~/rpmdir/RPMS/x86_64/*.rpm
   
 # 3) install and bash
-sudo rpm -ivh  ~/rpmdir/RPMS/x86_64/bash-4.3.30-1.x86_64.rpm --nodeps
+#sudo rpm -ivh ~/rpmdir/RPMS/x86_64/bash-4.3.30-1.x86_64.rpm --nodeps
 
-rpm -qa bash
-rpm -qf /usr/local/bin/bash
+#rpm -qa bash
+#rpm -qf /usr/local/bin/bash
 
 # uninstall
 # sudo rpm -e bash-4.3.30-1.x86_64 --nodeps
