@@ -1,4 +1,4 @@
-This is for rmp build exampe script.
+This is for rpm build exampe script.
 =====================================
 
 1. build
