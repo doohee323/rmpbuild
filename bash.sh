@@ -74,7 +74,7 @@ ls -al $BASEDIR/rpmbuild/RPMS/x86_64
 #* sudo alien -i $BASEDIR/rpmbuild/RPMS/x86_64/*.rpm
   
 # 3) install and bash
-#sudo rpm -ivh $BASEDIR/rpmbuild/RPMS/x86_64/bash-4.3.30-1.x86_64.rpm --nodeps
+#sudo rpm -ivh --replacefiles $BASEDIR/rpmbuild/RPMS/x86_64/bash-4.3.30-1.x86_64.rpm --nodeps
 
 #rpm -qa bash
 #rpm -qf /usr/local/bin/bash
