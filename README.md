@@ -4,7 +4,7 @@ This is for rpm build exampe script.
 1. build
 	Uncomment 1-1) install rpm, 1-2) make a passphrase for gpg in build.sh for the first running.
 
-	./build.sh
+	./bash.sh
 
 2. contains
 	There are some examples.
