@@ -1,7 +1,8 @@
 #!/bin/bash
 
-cd
-BASEDIR=`pwd`
+cd # required 
+# /home/doohee
+export BASEDIR=`pwd`	
 echo '$BASEDIR:'$BASEDIR
 
 # 1) requirements
@@ -52,11 +53,11 @@ cd
 #$'%_tmppath %{_topdir}/tmp \n'\
 #$'%_gpg_name "D330A940"'> .rpmmacros
 
-#mkdir -p $BASEDIR/rpmbuild/BUILD
-#mkdir -p $BASEDIR/rpmbuild/RPMS
-#mkdir -p $BASEDIR/rpmbuild/SOURCES
-#mkdir -p $BASEDIR/rpmbuild/SPECS
-#mkdir -p $BASEDIR/rpmbuild/SRPMS
+mkdir -p $BASEDIR/rpmbuild/BUILD
+mkdir -p $BASEDIR/rpmbuild/RPMS
+mkdir -p $BASEDIR/rpmbuild/SOURCES
+mkdir -p $BASEDIR/rpmbuild/SPECS
+mkdir -p $BASEDIR/rpmbuild/SRPMS
 
 # 2) make rpm
 # 2-1) make source
@@ -72,14 +73,15 @@ tar czvf test-1.0.0.tar.gz test-1.0.0/
 
 # 2-2) deploy a source and a spec file
 
-# 2-3) build rpm
+2-3) build rpm
+cp $BASEDIR/rpmbuild/test.spec $BASEDIR/rpmbuild/SPECS/
 cd $BASEDIR/rpmbuild/SPECS/
 rpmbuild --sign -ba test.spec
-# Pswd!123
+Pswd!123
 
 ll $BASEDIR/rpmbuild/RPMS/x86_64
 
-#* sudo alien -i $BASEDIR/rpmbuild/RPMS/x86_64/*.rpm
+* sudo alien -i $BASEDIR/rpmbuild/RPMS/x86_64/*.rpm
   
 # 3) install and test
 sudo rpm -ivh  $BASEDIR/rpmbuild/RPMS/x86_64/test-1.0.0-1.x86_64.rpm --nodeps
@@ -88,7 +90,7 @@ rpm -qa test
 rpm -qf /usr/local/bin/test
 
 # uninstall
-# sudo rpm -e test-1.0.0-1.x86_64 --nodeps
+sudo rpm -e test-1.0.0-1.x86_64 --nodeps
 
 
 

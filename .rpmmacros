@@ -1,0 +1,8 @@
+%_topdir /home/doohee 
+%_builddir %{_topdir}/BUILD 
+%_rpmbuild %{_topdir}/RPMS 
+%_sourcedir %{_topdir}/SOURCES 
+%_specdir %{_topdir}/SPECS 
+%_srcrpmbuild %{_topdir}/SRPMS 
+%_tmppath %{_topdir}/tmp 
+%_gpg_name "6BA45BBD"
